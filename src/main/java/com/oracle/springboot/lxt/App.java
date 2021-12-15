@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @MapperScan("com.oracle.springboot.lxt.mapper")
 @EnableTransactionManagement
 public class App {
-
     public static void main(String[] args) {
+        System.out.println(13651);
         SpringApplication.run(App.class, args);
     }
 }
