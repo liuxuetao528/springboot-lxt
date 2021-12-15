@@ -14,6 +14,7 @@ public class App {
         System.out.println("223y1273");
         System.out.println("我是杨戬人");
         System.out.println("我是阴间人");
+        System.out.println(12312);
         SpringApplication.run(App.class, args);
     }
 }
