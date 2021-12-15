@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class App {
     public static void main(String[] args) {
         System.out.println("我是大帅比");
-        System.out.println(12132);
+        System.out.println("223y1273");
+        System.out.println("我是杨戬人");
+        System.out.println("我是阴间人");
         SpringApplication.run(App.class, args);
     }
 }
