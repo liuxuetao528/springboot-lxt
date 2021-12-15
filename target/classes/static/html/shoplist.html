@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{../static/js/jquery.min.js}" type="text/javascript" ></script>
+    <script>
+        function getPage(page){
+            //设置当前页
+            $("#page").val(page);
+            //提交表单
+            $("#myForm").submit();
+        }
+        function deleteOrder(id) {
+            if ((confirm("确定删除吗？"))) {
+                $.getJSON("/user/deleteo", {id: id}, function (data) {
+                    if (data) {
+                        alert("successful");
+                    }
+                })
+            }
+        }
+
+        /*function datadel(url) {
+            var ids=[]
+            $("input[type='checkbox']:checked").each(function () {
+                var id = $(this).parent().next().text();
+                if (id != "ID") {
+                    ids.push(id);
+                }
+            })*/
+
+            function DelByMids() {
+                var ids=[]
+                $("[type=checkbox]:checked").each(function (){
+                    var id=$(this).val()
+                    alert(id)
+                    ids.push(id)
+                })
+                alert(id)
+                if ($("[type=checkbox]:checked").length == 0) {
+                    alert("未选中")
+                } else {
+                    if (confirm("确定删除？")) {
+                        $.getJSON("/shop/delete", {id: id}, function (data) {
+                            if (data) {
+                                alert("successful");
+                            }
+                        })
+                    }
+                }
+        }
+    </script>
+</head>
+<body>
+<center>
+<table>
+    <a href="add.html"
+       th:href="@{/shop/toadd}">添加</a>---------
+
+    <tr>
+        <td colspan="6">
+            <form action="/shop/getshoplist" method="post" id="myForm" >
+
+                姓名：<input type="text" name="name" th:value="${shop.name}" placeholder="请输入查询条件">
+                最低价：<input type="text" name="min" th:value="${min}">-最高价<input type="text" name="max" th:value="${max}">
+                <input type="hidden" name="page" id="page" value="1">
+                <input type="submit" value="查询">
+            </form>
+        </td>
+    </tr>
+    <form action="/shop/delete" method="post" id>
+    <tr>
+        <td>选择</td>
+        <td>编号</td>
+        <td>姓名</td>
+        <td>价格</td>
+        <td>图片</td>
+        <td>库存</td>
+        <td>操作</td>
+    </tr>
+    <tr th:each="shop:${pageInfo.list}">
+        <td><input type="checkbox" name="id" th:value="${shop.id}"></td>
+        <td th:text="${shop.id}"></td>
+        <td th:text="${shop.name}"></td>
+        <td th:text="${shop.price}"></td>
+        <td><img th:src="${shop.url}" width="50px" height="50px"></td>
+        <td th:text="${shop.num}"></td>
+
+        <td> <a th:href="@{/shop/toupdate(id=${shop.id})}">修改</a></td>
+    </tr>
+        <tr><input type="submit" th:value="删除"></tr>
+    </form>
+    <tr>
+        <td colspan="6" >
+            总记录数：<span th:text="${pageInfo.total}"></span> &nbsp;
+            当前页/总页数：<span th:text="${pageInfo.pageNum}"></span>/<span th:text="${pageInfo.pages}"></span>
+            <a th:onclick="'getPage('+1+')'">首页</a>
+            <a th:onclick="'getPage('+${pageInfo.prePage}+')'">上一页</a>
+            <a th:onclick="'getPage('+${pageInfo.nextPage}+')'">下一页</a>
+            <a th:onclick="'getPage('+${pageInfo.pages}+')'">尾页</a>
+        </td>
+    </tr>
+</table>
+</center>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<script th:src="@{../static/js/jquery.min.js}" type="text/javascript"></script>
+<head>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+        function changeImg() {
+            var myUrl = undefined;
+            var formData = new FormData();
+            formData.append("file", $("#img")[0].files[0]);
+            $.ajax({
+                type:'POST',
+                url:"/shop/checkform",
+                data:formData,
+                contentType:false,
+                processData:false,//这个很有必要，不然不行
+                dataType:"json",
+                mimeType:"multipart/form-data",
+                success:function(data){
+                    if(data.Code="200"){
+                        myUrl = data.t
+                        $("#myf").attr("value",myUrl);
+                        alert("上传成功");
+                    }else{
+                        alert("服务器繁忙");
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<form method="post" action="/shop/update" enctype="multipart/form-data">
+    姓名：<input type="text" name="name" th:value="${shop.name}"><br>
+    价格：<input type="text" name="price" th:value="${shop.name}"><br>
+    图片：<img id="myurl" th:src="${shop.url}" style="height: 100px;width: 100px" />
+    <span>图片路径</span>
+    <input class="xinzeng"  type="file" name="file"  id="img" th:value="选择上传"/>
+    库存：<input type="text" name="num" th:value="${shop.num}"><br>
+    <input type="hidden" name="id" th:value="${shop.id}">
+    <input type="hidden" name="status" th:value="${shop.status}">
+    <input type="submit" value="修改">
+</form>
+</body>
+</html>
