@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class App {
     public static void main(String[] args) {
-        System.out.println(13651);
+        System.out.println("我是大帅比");
         SpringApplication.run(App.class, args);
     }
 }
